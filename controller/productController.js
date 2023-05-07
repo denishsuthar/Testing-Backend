@@ -15,15 +15,13 @@ export const allProducts = catchAsyncError(async(req, res, next)=>{
 
 // Create Product --Admin
 export const createProduct = catchAsyncError(async(req, res, next)=>{
-    req.body.user = req.user.id;
     const {name, description, price, category} = req.body;
+    const user = req.body.user = req.user.id;
     
     if(!name || !description || !price || !category) return next(new ErrorHandler("Please Fill All Fields", 400));
 
-    
-
     const product = await Product.create({
-        name, description, price, category
+        name, description, price, category, user
     })
 
     res.status(201).json({
