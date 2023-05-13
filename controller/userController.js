@@ -9,9 +9,13 @@ import getDataUri from "../utils/dataUri.js"
 
 // Registed User
 export const registerUser = catchAsyncError(async(req, res, next)=>{
-    const {name, email, password} = req.body;
+    const {name, email, password, confirmPassword} = req.body;
     const file = req.file;
-    if(!name || !email || !password || !file) return next(new ErrorHandler("Please Fill All Fields", 400));
+    if(!name || !email || !password || !file || !confirmPassword) return next(new ErrorHandler("Please Fill All Fields", 400));
+
+    if(password !== confirmPassword){
+        return next(new ErrorHandler("Passoword Not Match", 400))
+    }
 
     let user = await User.findOne({email});
     if(user) return next(new ErrorHandler("User Alredy Exists", 409));
