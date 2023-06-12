@@ -49,9 +49,9 @@ userSchema.pre("save", async function(next){
 
 //Token Generating
 userSchema.methods.getJWTToken = function(){
-    return jwt.sign({_id : this._id},process.env.JWT_SECRET,{
-        expiresIn:"15d",
-    })
+  return jwt.sign({_id : this._id},process.env.JWT_SECRET,{
+      expiresIn:"15d",
+  })
 }
 
 //Compare Password

@@ -18,10 +18,10 @@ export const isAuthenticatedUser = catchAsyncError(async(req, res, next)=>{
 
     next();
 })
-
 // Admin
 export const isAdmin = (req, res, next)=>{
     if(req.user.role !== "admin")
     return next(new ErrorHandler(`${req.user.role} is not allowed to access this resource`, 401));
     next();
 }
+
