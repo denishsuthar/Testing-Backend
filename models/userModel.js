@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
+  
+  //Use Below Avatar for Normal Upload
+  // avatar:{
+  //   type:Object,
+  //   required:[true, "Please Upload Avatar"]
+  // }
 });
 
 //Hashing Password

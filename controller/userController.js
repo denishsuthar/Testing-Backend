@@ -38,6 +38,30 @@ export const registerUser = catchAsyncError(async(req, res, next)=>{
     sendToken(res, user, "Registed Successfully", 201);
 })
 
+// Register User with Normal Avatar Upload
+// export const registerUserMulter = catchAsyncError(async(req, res, next)=>{
+//     const {name, email, password, confirmPassword} = req.body;
+//     const avatar = req.file
+//     if(!name || !email || !password || !avatar || !confirmPassword) return next(new ErrorHandler("Please Fill All Fields", 400));
+
+//     if(password !== confirmPassword){
+//         return next(new ErrorHandler("Passoword Not Match", 400))
+//     }
+
+//     let user = await User.findOne({email});
+//     if(user) return next(new ErrorHandler("User Alredy Exists", 409));
+
+
+//     user = await User.create({
+//         name, 
+//         email, 
+//         password,
+//         avatar
+//     });
+
+//     sendToken(res, user, "Registed Successfully", 201);
+// })
+
 // Login User
 export const loginUser = catchAsyncError(async (req,res,next) =>{
     const {email, password} = req.body;
