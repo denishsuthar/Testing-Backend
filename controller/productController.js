@@ -8,7 +8,7 @@ export const allProducts = catchAsyncError(async (req, res, next) => {
   const resultPerPage = 8;
   const productCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
+  const apiFeature = new ApiFeatures(Product.find().populate("createdBy"), req.query)
     .search()
     .filter();
 
@@ -29,7 +29,7 @@ export const allProducts = catchAsyncError(async (req, res, next) => {
 // Create Product --Admin
 export const createProduct = catchAsyncError(async (req, res, next) => {
   const { name, description, price, category } = req.body;
-  const user = (req.body.user = req.user.id);
+  const createdBy = (req.body.user = req.user.id);
 
   if (!name || !description || !price || !category)
     return next(new ErrorHandler("Please Fill All Fields", 400));
@@ -39,7 +39,7 @@ export const createProduct = catchAsyncError(async (req, res, next) => {
     description,
     price,
     category,
-    user,
+    createdBy,
   });
 
   res.status(201).json({

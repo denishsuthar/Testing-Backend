@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
         maxLength: [4, "Stock cannot exceed 4 characters"],
         default: 1,
     },
-    user:{
+    createdBy:{
         type:mongoose.Schema.ObjectId,
         ref:'User',
         required:true
