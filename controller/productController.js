@@ -104,3 +104,29 @@ export const singleProduct = catchAsyncError(async (req, res, next) => {
     product,
   });
 });
+
+// Get All Products who created that Products
+export const userProducts = catchAsyncError(async(req, res, next)=>{
+  const createdBy = req.body.user = req.user.id;
+  const products = await Product.find({createdBy}).populate("createdBy");
+  res.status(200).json({
+    success:true,
+    products
+  })
+})
+
+// Only those products will be deleted which he has made.
+export const deleteUserProduct = catchAsyncError(async(req, res, next)=>{ 
+  const product = await Product.findById(req.params.id);
+  if(!product) return next(new ErrorHandler("Product Not Found", 404))
+
+  if(product.createdBy.toString() !== req.user.id){
+    return next(new ErrorHandler("You are not authorized to delete this product", 401))
+  }
+  await product.deleteOne();
+
+  res.status(200).json({
+    success:true,
+    message:"Product Deleted"
+  })
+}) 

@@ -1,10 +1,15 @@
 import express from "express";
-import { allProducts, createProduct, deleteProduct, singleProduct, updateProduct } from "../controller/productController.js";
+import { allProducts, createProduct, deleteProduct, deleteUserProduct, singleProduct, updateProduct, userProducts } from "../controller/productController.js";
 import { isAdmin, isAuthenticatedUser } from "../middelware/auth.js";
 
 const router = express.Router();
 
 router.route("/products").get(allProducts)
+
+router.route("/myproducts").get(isAuthenticatedUser, userProducts)
+
+router.route("/product/delete/:id").delete(isAuthenticatedUser, deleteUserProduct)
+
 
 
 
